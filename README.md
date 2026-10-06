@@ -472,11 +472,11 @@ sequenceDiagram
   alt Success
     A-->>X: Direct JSON array
     X-->>H: response.data
-    H->>H: Log data; setProducts(array)
-    H->>H: Clear loading; render cards or empty
+    H->>H: Log data#59; setProducts(array)
+    H->>H: Clear loading#59; render cards or empty
   else Failure
     X-->>H: Error
-    H->>H: console.log(error); loading stays true
+    H->>H: console.log(error)#59; loading stays true
   end
 ```
 
@@ -510,24 +510,24 @@ sequenceDiagram
   participant U as User
   participant E as EditPage
   participant A as External API
-  E->>E: useParams reads id; mount effect; loading true
+  E->>E: useParams reads id#59; mount effect#59; loading true
   E->>A: GET /api/products/:id
   alt GET succeeds
     A-->>E: Direct product object
-    E->>E: Store four fields; clear loading; show form
+    E->>E: Store four fields#59; clear loading#59; show form
   else GET fails
     A-->>E: Error
-    E->>E: Error toast; clear loading; show form
+    E->>E: Error toast#59; clear loading#59; show form
   end
-  U->>E: Change fields; object spread updates state
-  U->>E: Submit; preventDefault; loading true
+  U->>E: Change fields#59; object spread updates state
+  U->>E: Submit#59; preventDefault#59; loading true
   E->>A: PUT /api/products/:id with product
   alt PUT succeeds
     A-->>E: Response body unused
-    E->>E: Success toast; navigate to /
+    E->>E: Success toast#59; navigate to /
   else PUT fails
     A-->>E: Error
-    E->>E: Error toast; clear loading; show form again
+    E->>E: Error toast#59; clear loading#59; show form again
   end
 ```
 

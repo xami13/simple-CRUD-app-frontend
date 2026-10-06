@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML + CSS cheat sheet — every element from the react-crud folder</title>
+
+  <!--
+    ===================================================================
+    ONE-FILE CHEAT SHEET
+    ===================================================================
+    Every HTML tag and every CSS rule below comes straight from the
+    react-crud project. Tailwind classes are shown as comments so you
+    can map them back to plain CSS.
+
+    HTML elements used in the folder:  div, nav, a, h2, img
+    Pages also exist for Create/Edit but they're empty placeholders,
+    so the navbar + product grid covers the visible UI.
+    ===================================================================
+  -->
+
+  <style>
+    /* ---------- 1. RESET (start clean) ---------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }            /* strip default browser spacing and switch every element to border-box sizing */
+
+    /* ---------- 2. BODY (bg-slate-400) ---------- */
+    body {                                                          /* base styles for the whole page */
+      background: #94a3b8;                                          /* slate-400 — paint the whole page gray */
+      font-family: system-ui, -apple-system, sans-serif;             /* use the OS default font stack */
+      min-height: 100vh;                                            /* page is at least the full height of the viewport */
+      color: #111;                                                  /* near-black text color */
+    }
+
+    /* ---------- 3. CONTAINER (container mx-auto p-3) ----------
+       Centers content and adds breathing room. */
+    .container {                                                    /* reusable wrapper for centered content */
+      width: 100%;                                                  /* take full available width */
+      max-width: 1280px;                                            /* ...but never wider than 1280px */
+      margin: 0 auto;                                               /* mx-auto — center horizontally */
+      padding: 0.75rem;                                             /* p-3 — space inside on every side */
+    }
+
+    /* ---------- 4. NAVBAR (bg-gray-800) ---------- */
+    .navbar { background: #1f2937; }                                /* gray-800 — dark bar across the top */
+
+    .navbar a { text-decoration: none; display: inline-block; }     /* kill link underline; let the link sit inline */
+
+    .navbar h2 {                                                    /* the navbar title */
+      color: #fff;                                                  /* text-white */
+      font-size: 1.5rem;                                            /* text-2xl — 24px */
+      font-weight: 700;                                             /* font-bold */
+      padding: 0.25rem 0;                                           /* tiny vertical breathing room */
+    }
+
+    /* ---------- 5. GRID (grid grid-cols-2 lg:grid-cols-4 gap-4 mt-5) ---------- */
+    .grid {                                                         /* the product grid container */
+      display: grid;                                                /* turn this div into a CSS grid */
+      grid-template-columns: repeat(2, 1fr);                        /* grid-cols-2 — two equal columns by default */
+      gap: 1rem;                                                    /* gap-4 — space between rows and columns */
+      margin-top: 1.25rem;                                          /* mt-5 — push the grid down a bit */
+    }
+    /* lg breakpoint — on big screens show 4 columns instead of 2 */
+    @media (min-width: 1024px) {                                    /* when the screen is ≥1024px wide... */
+      .grid { grid-template-columns: repeat(4, 1fr); }              /* ...switch to 4 equal columns (lg:grid-cols-4) */
+    }
+
+    /* ---------- 6. CARD (bg-white rounded shadow-lg overflow-hidden) ---------- */
+    .card {                                                         /* the product card */
+      background: #fff;                                             /* bg-white */
+      border-radius: 0.25rem;                                       /* rounded — small rounded corners */
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);                      /* shadow-lg — soft drop shadow under the card */
+      overflow: hidden;                                             /* clip anything (like the image) that sticks out past the rounded corners */
+    }
+
+    /* ---------- 7. CARD IMAGE (w-full h-50 object-cover) ---------- */
+    .card img {                                                     /* only the <img> inside a .card */
+      width: 100%;                                                  /* w-full — fill the card horizontally */
+      height: 200px;                                                /* h-50 ≈ 12.5rem — fixed image height so all cards line up */
+      object-fit: cover;                                            /* crop the image to fill, don't squish it */
+      display: block;                                               /* remove the tiny gap under inline images */
+    }
+
+    /* ---------- 8. CARD BODY (px-4 pt-2 pb-4) ---------- */
+    .card-body {                                                    /* the text area inside a card */
+      padding: 0.5rem 1rem 1rem;                                    /* pt-2 px-4 pb-4 — top 8px, sides 16px, bottom 16px */
+    }
+
+    .card-title { font-weight: 600; }                               /* font-semibold — the product name */
+    .card-meta  { font-size: 0.875rem; }                            /* text-sm — smaller text for quantity/price lines */
+
+    /* ---------- 9. ACTION ROW (mt-2 flex gap-4) ---------- */
+    .card-actions {                                                 /* the row holding Edit + Delete buttons */
+      margin-top: 0.5rem;                                           /* mt-2 — space above the buttons */
+      display: flex;                                                /* lay children out in a row */
+      gap: 1rem;                                                    /* gap-4 — fixed space between the buttons */
+    }
+
+    /* ---------- 10. BUTTON LINKS ----------
+       They look like buttons but are <a> tags — same as react-router
+       <Link> components in the project. */
+    .btn {                                                          /* shared button styling */
+      display: inline-block;                                        /* inline-block — sit side-by-side but accept width/height */
+      width: 100%;                                                  /* w-full — each button fills its half of the row */
+      text-align: center;                                           /* text-center — center the label inside the button */
+      font-size: 0.875rem;                                          /* text-sm */
+      color: #fff;                                                  /* text-white */
+      border-radius: 0.125rem;                                      /* rounded-sm — tiny corner radius */
+      padding: 0.25rem 1rem;                                        /* px-4 py-1 — horizontal 16px, vertical 4px */
+      font-weight: 700;                                             /* font-bold */
+      text-decoration: none;                                        /* kill the link underline so it really looks like a button */
+      cursor: pointer;                                              /* hover:cursor-pointer — show the hand cursor on hover */
+      transition: background 0.2s;                                  /* smooth color change on hover instead of a jarring snap */
+    }
+
+    .btn-edit   { background: #374151; }                            /* bg-gray-700 — neutral dark gray */
+    .btn-edit:hover   { background: #4b5563; }                      /* hover:bg-gray-600 — slightly lighter on hover */
+
+    .btn-delete { background: #b91c1c; }                            /* bg-red-700 — destructive red */
+    .btn-delete:hover { background: #dc2626; }                      /* hover:bg-red-600 — brighter red on hover */
+
+    /* ---------- 11. EMPTY / LOADING STATE ---------- */
+    .empty {                                                        /* the "no products" or "Loading…" box */
+      background: #fff;                                             /* white panel */
+      padding: 1rem;                                                /* roomy inside spacing */
+      border-radius: 0.25rem;                                       /* match the card corners */
+      text-align: center;                                           /* center the message */
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============ NAVBAR (from App.jsx) ============ -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#"><h2>React CRUD</h2></a>
+    </div>
+  </nav>
+
+  <!-- ============ MAIN AREA (from App.jsx) ============ -->
+  <div class="container">
+
+    <!--
+      The grid below is the HomePage (HomePage.jsx).
+      In the React version it loops over products with .map() and
+      renders a <Product /> for each one. Here we just write out the
+      cards by hand — same markup, no loop.
+    -->
+    <div class="grid">
+
+      <!-- ===== CARD 1 (from Product.jsx) ===== -->
+      <div class="card">
+        <img src="https://picsum.photos/seed/p1/600/400" alt="Product 1">
+        <div class="card-body">
+          <h2 class="card-title">Wireless Headphones</h2>
+          <div class="card-meta">Quantity: 12</div>
+          <div class="card-meta">Price: $59.99</div>
+
+          <div class="card-actions">
+            <!-- <a> used here the same way <Link> is used in Product.jsx -->
+            <a href="#" class="btn btn-edit">Edit</a>
+            <a href="#" class="btn btn-delete">Delete</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CARD 2 ===== -->
+      <div class="card">
+        <img src="https://picsum.photos/seed/p2/600/400" alt="Product 2">
+        <div class="card-body">
+          <h2 class="card-title">Mechanical Keyboard</h2>
+          <div class="card-meta">Quantity: 7</div>
+          <div class="card-meta">Price: $129.00</div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-edit">Edit</a>
+            <a href="#" class="btn btn-delete">Delete</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CARD 3 ===== -->
+      <div class="card">
+        <img src="https://picsum.photos/seed/p3/600/400" alt="Product 3">
+        <div class="card-body">
+          <h2 class="card-title">USB-C Hub</h2>
+          <div class="card-meta">Quantity: 25</div>
+          <div class="card-meta">Price: $24.50</div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-edit">Edit</a>
+            <a href="#" class="btn btn-delete">Delete</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CARD 4 ===== -->
+      <div class="card">
+        <img src="https://picsum.photos/seed/p4/600/400" alt="Product 4">
+        <div class="card-body">
+          <h2 class="card-title">Webcam 1080p</h2>
+          <div class="card-meta">Quantity: 3</div>
+          <div class="card-meta">Price: $49.00</div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-edit">Edit</a>
+            <a href="#" class="btn btn-delete">Delete</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!--
+      The HomePage also renders two alternative states when the
+      products array is empty or loading. Same HTML, different copy:
+    -->
+    <!-- <div class="empty">Loading...!</div> -->
+    <!-- <div class="empty">There is no product T_T</div> -->
+
+  </div>
+
+</body>
+</html>
